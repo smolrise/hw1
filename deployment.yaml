@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: my-ws-depl
+spec:
+    replicas: 3
+    selector:
+       matchLabels:
+          app: my-ws-app
+    template:
+       metadata:
+          labels:
+             app: my-ws-app
+       spec:
+          containers:
+          - name: my-ws-cnr
+            image: my-ws:v1
+            ports:
+              - name: web
+                containerPort: 80
+            livenessProbe:
+              httpGet:
+                port: 80
+                path: /
+              initialDelaySeconds: 10
+              periodSeconds: 5
+              timeoutSeconds: 2
+            readinessProbe:
+              httpGet:
+                port: 80
+                path: /health
+              initialDelaySeconds: 10
+              periodSeconds: 5

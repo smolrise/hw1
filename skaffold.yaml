@@ -1,0 +1,13 @@
+apiVersion: skaffold/v2alpha4
+kind: Config
+metadata:
+  name: my-ws-skaffold
+build:
+  artifacts:
+  - image: my-ws
+    context: my-ws
+deploy:
+  kubectl:
+    manifests:
+    - deployment.yaml
+    - service.yaml
